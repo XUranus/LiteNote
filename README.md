@@ -21,12 +21,12 @@ cd liteNote
 2. 修改环境配置
 ```
 mv env.json.example env.json
+vim env.json
 ```
 编辑`env.json`的环境配置文件，格式如下，需要声明服务器端口，域名。和mysql数据库相关配置。
 ```js
 {
     "nodeServer":{
-        "host": "localhost",
         "port":8080
     },
     "mySQL":{
@@ -40,9 +40,19 @@ mv env.json.example env.json
 ```
 
 3. 修改前端配置：
-上述配置完成后，还需要复制一份给前端进行构建：
 ```
-cp env.json src
+mv src/reactEnv.json.example src/reactEnv.json
+vim src/reactEnv.json
+```
+前端配置如下：
+```js
+{
+    "server":{
+        "host": "localhost",
+        "port":8080,
+        "protocol": "http"
+    }
+}%      
 ```
 该文件中还声明了前端和后端服务通信的地址（换成公网地址），然后安装依赖，webpack构建前端组件
 ```

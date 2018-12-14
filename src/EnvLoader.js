@@ -1,6 +1,8 @@
-import config from './env.json'
+import serverConfig from './reactEnv.json';
+
+const server = serverConfig.server;
 
 export default {
-    apiServerAddr: "http://"+config.nodeServer.host+":"+config.nodeServer.port+"/api",
-    imageServerAddr: "http://"+config.nodeServer.host+":"+config.nodeServer.port+"/img",
+    apiServerAddr: server.protocol+"://"+server.host+":"+server.port+"/api",
+    imageServerAddr: server.protocol+"://"+server.host+":"+server.port+"/img",
 }

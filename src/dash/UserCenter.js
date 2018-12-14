@@ -64,6 +64,7 @@ class UserCenter extends React.Component {
           this.setState({
             edit:false
           });
+          this.props.syncUserInfo();
         } else {
           this.props.snackbarMsgHandler('error')('修改失败: '+res.data.msg)
           this.setState({

@@ -294,7 +294,7 @@ class Dash extends React.Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar}  />
-            {this.state.rightPanel==='userCenter'?<UserCenter user={this.state.user} snackbarMsgHandler={this.displaySnackbarMsg.bind(this)}/>:null}
+            {this.state.rightPanel==='userCenter'?<UserCenter user={this.state.user} snackbarMsgHandler={this.displaySnackbarMsg.bind(this)} syncUserInfo={this.syncUserInfo.bind(this)}/>:null}
             {this.state.rightPanel==='markdown'?<MarkdownEditor note={this.state.noteEditing} snackbarMsgHandler={this.displaySnackbarMsg.bind(this)}/>:null}
             {this.state.rightPanel==='richText'?<RichEditor note={this.state.noteEditing} snackbarMsgHandler={this.displaySnackbarMsg.bind(this)}/>:null}
             {this.state.rightPanel==='welcome'?<WelcomePage/>:null}

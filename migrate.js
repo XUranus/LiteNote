@@ -1,6 +1,10 @@
-const conn = require('./mysqlConn.js')();
+const mysql = require('mysql');
+const fs = require('fs')
+const DBconfig = JSON.parse(fs.readFileSync('./env.json')).mySQL
+DBconfig.multipleStatements = true;//强制多条语句
+const conn = mysql.createConnection(DBconfig);
 
-const SQLs = [{
+const SQLs = [{ //填写sql语句
     up:
     `create table user (
         user_id int not null auto_increment,
@@ -47,22 +51,46 @@ const SQLs = [{
     `drop table image`
 }]
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 start=()=>{
-    var excuted = 0;
-    var totalSqls = SQLs.length;
     var argv = process.argv[2];
-    var sqls = (argv=='up')?SQLs.map(act =>act.up):SQLs.map(act =>act.down).reverse();
-    sqls.forEach((sql,index)=>{
-        (()=>{
-            conn.query(sql,(err,data)=>{
-                console.log(sql);
-                if(err) console.log(err);
-                else {
-                    console.log(++excuted+' sqls executed,'+(totalSqls-excuted)+' remain.');
-                }
-            });
-        })();
-    });
+    var sqls = (argv=='up')?(SQLs.map(act =>act.up)):(SQLs.map(act =>act.down).reverse());
+    var query = getQuery(sqls);
+    conn.query(query,(err,data)=>{
+        if(err) {
+            console.log('failed: ',err);
+            process.exit(1)
+        }
+        else {
+            console.log('success.');
+            process.exit(0);
+        }
+    })
+}
+
+getQuery = (sqls)=>{
+    var query = '';
+    for(var i=0;i<sqls.length;i++) {
+        var sql = sqls[i]; 
+        var length = sql.length;
+        if (sql[length-1]!=';') {
+            sql += '; ';
+        }
+        query += sql;
+    }
+    return query;
 }
 
 start();
